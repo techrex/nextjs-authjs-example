@@ -105,7 +105,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     // }),
     // WorkOS({ connection: process.env.AUTH_WORKOS_CONNECTION! }),
     // Zoom,
-    Sendgrid
+    Sendgrid({
+      from: process.env.AUTH_SENDGRID_FROM!,
+    }),
   ],
   basePath: "/auth",
   session: { strategy: "jwt" },
