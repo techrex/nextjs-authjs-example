@@ -38,6 +38,7 @@ import memoryDriver from "unstorage/drivers/memory"
 import vercelKVDriver from "unstorage/drivers/vercel-kv"
 // import { UnstorageAdapter } from "@auth/unstorage-adapter"
 import { SupabaseAdapter } from "@auth/supabase-adapter"
+import Sendgrid from "next-auth/providers/sendgrid"
 
 // const storage = createStorage({
 //   driver: process.env.VERCEL
@@ -104,6 +105,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     // }),
     // WorkOS({ connection: process.env.AUTH_WORKOS_CONNECTION! }),
     // Zoom,
+    Sendgrid
   ],
   basePath: "/auth",
   session: { strategy: "jwt" },
