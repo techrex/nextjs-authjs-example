@@ -29,29 +29,34 @@ import Google from "next-auth/providers/google"
 // import Salesforce from "next-auth/providers/salesforce"
 // import Spotify from "next-auth/providers/spotify"
 // import Twitch from "next-auth/providers/twitch"
-import Twitter from "next-auth/providers/twitter"
+// import Twitter from "next-auth/providers/twitter"
 // import Vipps from "next-auth/providers/vipps"
 // import WorkOS from "next-auth/providers/workos"
 // import Zoom from "next-auth/providers/zoom"
 import { createStorage } from "unstorage"
 import memoryDriver from "unstorage/drivers/memory"
 import vercelKVDriver from "unstorage/drivers/vercel-kv"
-import { UnstorageAdapter } from "@auth/unstorage-adapter"
+// import { UnstorageAdapter } from "@auth/unstorage-adapter"
+import { SupabaseAdapter } from "@auth/supabase-adapter"
 
-const storage = createStorage({
-  driver: process.env.VERCEL
-    ? vercelKVDriver({
-        url: process.env.AUTH_KV_REST_API_URL,
-        token: process.env.AUTH_KV_REST_API_TOKEN,
-        env: false,
-      })
-    : memoryDriver(),
-})
+// const storage = createStorage({
+//   driver: process.env.VERCEL
+//     ? vercelKVDriver({
+//         url: process.env.AUTH_KV_REST_API_URL,
+//         token: process.env.AUTH_KV_REST_API_TOKEN,
+//         env: false,
+//       })
+//     : memoryDriver(),
+// })
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   debug: !!process.env.AUTH_DEBUG,
   theme: { logo: "https://authjs.dev/img/logo-sm.png" },
   // adapter: UnstorageAdapter(storage),
+  adapter: SupabaseAdapter({
+    url: process.env.SUPABASE_URL!,
+    secret: process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  }),
   providers: [
     // Apple,
     // // Atlassian,
@@ -93,7 +98,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     // Slack,
     // Spotify,
     // Twitch,
-    Twitter,
+    // Twitter,
     // Vipps({
     //   issuer: "https://apitest.vipps.no/access-management-1.0/access/",
     // }),
